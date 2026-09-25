@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BucksSauce Landing Page Reveal | Codegrid</title>
+    <link rel="stylesheet" href="./styles.css" />
+    <link rel="stylesheet" href="./nav.css" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&display=swap" rel="stylesheet" />
+  </head>
+  <body>
+    <div class="preloader">
+      <div class="preloader-bg"></div>
+      <div class="preloader-logo"><img src="./public/logo.jpg" alt="" /></div>
+    </div>
+
+    <nav class="tp-nav">
+      <a class="tp-nav-logo" href="./" aria-label="Thai Palate home">
+        <img src="./public/logo.jpg" alt="Thai Palate" />
+      </a>
+      <button class="tp-nav-toggler" type="button" aria-expanded="false" aria-controls="tp-menu">
+        Menu
+      </button>
+    </nav>
+
+    <div class="tp-menu" id="tp-menu" aria-hidden="true">
+      <div class="tp-menu-content">
+        <div class="tp-menu-links">
+          <a href="#">Home</a>
+          <a href="./menu.html">Menu</a>
+          <a href="#">Our History</a>
+          <a href="./contact.html">Contact Us</a>
+        </div>
+
+        <div class="tp-menu-footer">
+          <p>Locally sourced</p>
+          <p>Always welcome</p>
+          <p>Open every week</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-container">
+      <section class="hero">
+        <div class="hero-background" aria-hidden="true"></div>
+
+        <div class="hero-header">
+          <h1></h1>
+        </div>
+
+        <div class="hero-img">
+          <div class="hero-img-bg"></div>
+          <img src="./public/item6.jpg" alt="" />
+        </div>
+
+        <div class="hero-footer">
+          <a class="footer-contact" href="tel:+6197635206">+61 97635206</a>
+          <a
+            class="footer-contact"
+            href="https://maps.app.goo.gl/caWjrGrzkAAFTEAe6"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            7 Australia Avenue, Sydney Olympic Park
+          </a>
+        </div>
+      </section>
+
+      <section class="story-section">
+        <div class="story-image">
+          <img src="./public/pre.jpg" alt="Thai Plate restaurant" />
+        </div>
+
+        <canvas class="story-canvas" aria-hidden="true"></canvas>
+
+        <div class="story-intro">
+          <h2>Made to be shared</h2>
+          <p>Fresh Thai plates, bright flavours and a table worth returning to.</p>
+        </div>
+
+        <div class="story-copy">
+          <h3>
+            Thai Plate brings the warmth of Thai cooking to Sydney Olympic Park, with food made for lingering conversations and easy repeat visits.
+          </h3>
+          <a class="story-learn-more" href="#">Learn More</a>
+        </div>
+      </section>
+
+
+      <!-- ==================================================================
+           ADDED — introductory scroll section.
+           Appended after .story-section. Nothing above this was modified.
+
+           Images expected:  /thai1.jpg (Intro)  /thai2.jpg (Lunch)
+                             /thai3.jpg (Dinner) /thai4.jpg (Location)
+           Lunch + Dinner body copy are PLACEHOLDERS — search "PLACEHOLDER".
+           ================================================================== -->
+      <section class="menu-scroll" aria-label="An introduction to Thai Palate">
+        <div class="menu-scroll-rail" aria-hidden="true">
+          <span class="menu-scroll-rail-fill"></span>
+        </div>
+
+        <article class="menu-panel">
+          <figure class="menu-panel-media">
+            <img src="./public/thai1.jpg" alt="Thai Palate dish" loading="lazy" decoding="async" />
+          </figure>
+          <div class="menu-panel-copy">
+            <span class="mp-index" aria-hidden="true">01 / 04</span>
+            <p class="mp-eyebrow">Introduction</p>
+            <h2 class="mp-title">Welcome</h2>
+            <span class="mp-rule" aria-hidden="true"></span>
+            <!-- PLACEHOLDER COPY -->
+            <p class="mp-body">Welcome to Thai Palate — established since 2015, bringing our Thai heritage to Sydney Olympic Park.</p>
+            <a class="mp-script" href="#tp-location">our story</a>
+          </div>
+        </article>
+
+        <article class="menu-panel menu-panel--flip">
+          <figure class="menu-panel-media">
+            <img src="./public/thai2.jpg" alt="Thai Palate lunch special" loading="lazy" decoding="async" />
+          </figure>
+          <div class="menu-panel-copy">
+            <span class="mp-index" aria-hidden="true">02 / 04</span>
+            <p class="mp-eyebrow">Lunch</p>
+            <h2 class="mp-title">Lunch Special</h2>
+            <span class="mp-rule" aria-hidden="true"></span>
+            <!-- PLACEHOLDER COPY -->
+            <p class="mp-body">Placeholder — a line or two about the lunch specials, Tuesday to Friday.</p>
+            <a class="mp-script" href="./lunch-menu.html">see lunch</a>
+          </div>
+        </article>
+
+        <article class="menu-panel">
+          <figure class="menu-panel-media">
+            <img src="./public/thai3.jpg" alt="Thai Palate dinner menu" loading="lazy" decoding="async" />
+          </figure>
+          <div class="menu-panel-copy">
+            <span class="mp-index" aria-hidden="true">03 / 04</span>
+            <p class="mp-eyebrow">Dinner</p>
+            <h2 class="mp-title">Dinner Menu</h2>
+            <span class="mp-rule" aria-hidden="true"></span>
+            <!-- PLACEHOLDER COPY -->
+            <p class="mp-body">Placeholder — a line or two about the dinner menu: curries, wok dishes and house specialties.</p>
+            <a class="mp-script" href="./dinner-menu.html">see dinner</a>
+          </div>
+        </article>
+
+        <article class="menu-panel menu-panel--flip" id="tp-location">
+          <figure class="menu-panel-media">
+            <img src="./public/thai4.jpg" alt="Thai Palate location" loading="lazy" decoding="async" />
+          </figure>
+          <div class="menu-panel-copy">
+            <span class="mp-index" aria-hidden="true">04 / 04</span>
+            <p class="mp-eyebrow">Visit</p>
+            <h2 class="mp-title">Location</h2>
+            <span class="mp-rule" aria-hidden="true"></span>
+            <div class="mp-body mp-contact">
+              <p>7 Australia Avenue<br />Sydney Olympic Park NSW 2127</p>
+              <p><a href="tel:+61297635206">(02) 9763 5206</a></p>
+              <p class="mp-hours">
+                Lunch — Tue–Fri 11:00–3:30 · Sat–Sun 11:30–4:00<br />
+                Dinner — Tue–Sun 5:00–9:00<br />
+                Monday — closed
+              </p>
+            </div>
+            <a class="mp-script" href="https://maps.app.goo.gl/caWjrGrzkAAFTEAe6" target="_blank" rel="noopener noreferrer">get directions</a>
+          </div>
+        </article>
+      </section>
+
+    </div>
+
+    <div class="butterfly-container" aria-hidden="true">
+      <div class="butterfly-shadow"></div>
+      <div class="butterfly"></div>
+    </div>
+    <script type="importmap">
+      {
+        "imports": {
+          "gsap": "https://esm.sh/gsap@3.15.0",
+          "gsap/SplitText": "https://esm.sh/gsap@3.15.0/SplitText",
+          "three": "https://esm.sh/three@0.180.0",
+          "lottie-web": "https://esm.sh/lottie-web@5.12.2"
+        }
+      }
+    </script>
+    <script type="module" src="./script.js"></script>
+    <script type="module" src="./nav.js"></script>
+  </body>
+</html>

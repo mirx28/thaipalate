@@ -1,0 +1,195 @@
+@import url("https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600&display=swap");
+
+/* Shared Thai Palate navigation. */
+:root {
+  --nav-base-100: #f5e1bf;
+  --nav-base-400: #8d7501d3;
+}
+
+.tp-page-transition {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 50% 45%, rgba(245, 225, 191, 0.08), transparent 42%),
+    #17110d;
+  opacity: 1;
+  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.tp-page-transition.is-ready {
+  opacity: 0;
+}
+
+.tp-page-transition.is-leaving {
+  opacity: 1;
+  transition-duration: 0.36s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tp-page-transition { transition: none; }
+}
+
+.tp-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  z-index: 20;
+}
+
+.tp-nav-logo img {
+  display: block;
+  width: 5rem;
+  height: auto;
+}
+
+.tp-nav-toggler {
+  border: 0;
+  padding: 0 1rem;
+  background: transparent;
+  color: var(--nav-base-100);
+  cursor: pointer;
+  font-family: "Barlow Condensed", sans-serif;
+  font-size: 1.5rem;
+  font-weight: 600;
+  line-height: 0.85;
+  text-transform: uppercase;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.tp-menu {
+  position: fixed;
+  inset: 0;
+  z-index: 15;
+  overflow: hidden;
+  background-color: #8d7501;
+  color: var(--nav-base-100);
+  transform: translate3d(0, -100%, 0);
+  backface-visibility: hidden;
+  will-change: transform;
+  transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.tp-menu::before {
+  position: absolute;
+  inset: -20%;
+  content: "";
+  opacity: 0.16;
+  background-image: linear-gradient(45deg, transparent 46%, var(--nav-base-100) 47%, var(--nav-base-100) 53%, transparent 54%), linear-gradient(-45deg, transparent 46%, var(--nav-base-100) 47%, var(--nav-base-100) 53%, transparent 54%);
+  background-size: 7rem 7rem;
+  transform: rotate(-8deg);
+  animation: tp-menu-pattern-slide 24s linear infinite;
+  animation-play-state: paused;
+  pointer-events: none;
+}
+
+@keyframes tp-menu-pattern-slide {
+  from { background-position: 0 0, 3.5rem 3.5rem; }
+  to { background-position: 14rem 14rem, 17.5rem 17.5rem; }
+}
+
+.tp-menu-content {
+  position: absolute;
+  inset: 0;
+  padding: 10rem 2rem 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  opacity: 0;
+  filter: blur(10px);
+  transform: translateZ(350px);
+  will-change: opacity, filter;
+  transition: opacity 0.7s ease, filter 0.7s ease;
+  z-index: 1;
+}
+
+.tp-menu-links {
+  width: min(100%, 78rem);
+  padding: 0;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(0.5rem, 1.5vh, 1.25rem);
+}
+
+.tp-menu-links a {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  max-width: 100%;
+  color: var(--nav-base-100);
+  font-family: "Barlow Condensed", sans-serif;
+  font-size: clamp(2.75rem, min(7vw, 11vh), 7rem);
+  font-weight: 500;
+  line-height: 0.82;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.tp-menu-links a::after {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 2px;
+  content: "";
+  background: var(--nav-base-100);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.35s ease;
+}
+
+.tp-menu-links a:hover::after,
+.tp-menu-links a:focus-visible::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+.tp-menu-footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  color: var(--nav-base-100);
+  font-family: "Barlow Condensed", sans-serif;
+}
+
+.tp-menu-footer p { font-size: 0.75rem; }
+
+body.is-menu-open .tp-menu {
+  transform: translate3d(0, 0, 0);
+}
+
+body.is-menu-open .tp-menu-content {
+  opacity: 1;
+  filter: blur(0);
+}
+
+body.is-menu-open .tp-menu::before {
+  animation-play-state: running;
+}
+
+@media (max-width: 1000px) {
+  .tp-nav { padding: 1.5rem; }
+  .tp-menu { transition-duration: 0.42s; }
+  .tp-menu-content {
+    padding: 8rem 1.5rem 1.5rem;
+    transform: translate3d(0, 0, 0);
+    filter: none;
+    transition: opacity 0.3s ease;
+  }
+  body.is-menu-open .tp-menu-content { filter: none; }
+  .tp-menu-links { width: 100%; gap: clamp(0.75rem, 2vh, 1.25rem); }
+  .tp-menu-links a { font-size: clamp(2.5rem, 11vw, 6rem); }
+  .tp-menu-footer { flex-direction: column; align-items: center; gap: 0.75rem; }
+}

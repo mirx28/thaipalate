@@ -1,0 +1,287 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contact Us | Thai Palate</title>
+    <meta name="description" content="Contact Thai Palate in Sydney Olympic Park." />
+    <link rel="stylesheet" href="./nav.css" />
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap");
+
+      :root {
+        --paper: #2a2301;
+        --ink: #f7f7f7;
+        --panel: #262625;
+        --light: #f5e1bf;
+        --accent: #c84c35;
+      }
+
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+
+      html, body { min-height: 100%; }
+
+      body {
+        background: var(--paper);
+        color: var(--ink);
+        font-family: "Instrument Sans", sans-serif;
+      }
+
+      button, input, textarea { font: inherit; }
+      button { cursor: pointer; }
+
+      .contact-hero {
+        min-height: 100svh;
+        display: grid;
+        place-items: center;
+        padding: 8rem 1.5rem 4rem;
+        text-align: center;
+      }
+
+      .contact-heading h1 {
+        font-family: "Instrument Serif", serif;
+        font-size: clamp(3.5rem, 10vw, 9rem);
+        font-weight: 400;
+        line-height: 0.86;
+        letter-spacing: 0;
+      }
+
+      .contact-heading p {
+        margin-top: 1.5rem;
+        color: var(--accent);
+        font-size: clamp(1rem, 2vw, 1.4rem);
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+      }
+
+      .contact-cta {
+        margin-top: 1.5rem;
+        border: 1px solid var(--ink);
+        border-radius: 999px;
+        padding: 0.65rem 1.1rem;
+        background: var(--ink);
+        color: var(--paper);
+        text-transform: uppercase;
+      }
+
+      .contact-heading span { display: block; overflow: hidden; }
+      .contact-heading span span { display: inline-block; }
+
+      .contact-panel {
+        position: fixed;
+        inset: 0;
+        z-index: 10;
+        display: grid;
+        grid-template-columns: minmax(260px, 34%) minmax(0, 1fr);
+        gap: 2rem;
+        padding: 6rem 2rem 2rem;
+        background: var(--panel);
+        color: var(--light);
+        opacity: 0;
+        pointer-events: none;
+        transform: translateY(100%);
+      }
+
+      .contact-panel.is-open {
+        opacity: 1;
+        pointer-events: auto;
+        transform: translateY(0);
+        transition: opacity 0.35s ease, transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+      }
+
+      .contact-panel-col:first-child {
+        min-width: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding-bottom: 2rem;
+        border-right: 1px solid rgba(245, 225, 191, 0.7);
+      }
+
+      .contact-brand {
+        width: max-content;
+        border: 1px solid var(--light);
+        color: var(--light);
+        padding: 0.25rem 0.45rem;
+        text-decoration: none;
+        text-transform: uppercase;
+        font-size: clamp(0.8rem, 1.2vw, 1rem);
+        letter-spacing: 0.04em;
+      }
+
+      .contact-about {
+        max-width: 30ch;
+        margin-bottom: 2rem;
+        font-size: clamp(0.95rem, 1.4vw, 1.15rem);
+        line-height: 1.35;
+      }
+
+      .contact-copy {
+        display: flex;
+        justify-content: space-between;
+        gap: 1rem;
+        font-size: 0.75rem;
+        text-transform: uppercase;
+      }
+
+      .contact-copy button {
+        border: 0;
+        background: none;
+        color: inherit;
+        text-transform: uppercase;
+      }
+
+      .contact-send {
+        align-self: end;
+        max-width: 100%;
+        overflow: hidden;
+      }
+
+      .contact-send h2 {
+        font-family: "Instrument Serif", serif;
+        max-width: 100%;
+        font-size: clamp(4rem, 7vw, 7rem);
+        font-weight: 400;
+        line-height: 0.8;
+        text-transform: uppercase;
+        white-space: nowrap;
+      }
+
+      .contact-form-wrap { min-width: 0; }
+
+      .contact-form-wrap h3 {
+        margin-bottom: 2rem;
+        font-family: "Instrument Serif", serif;
+        font-size: clamp(2rem, 4vw, 4rem);
+        font-weight: 400;
+      }
+
+      .contact-form { max-width: 720px; }
+
+      .contact-form label {
+        display: block;
+        margin-bottom: 0.4rem;
+        color: var(--light);
+        font-size: 0.8rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .contact-form input,
+      .contact-form textarea {
+        width: 100%;
+        margin-bottom: 1.4rem;
+        border: 0;
+        border-bottom: 1px solid rgba(245, 225, 191, 0.75);
+        outline: none;
+        padding: 0.55rem 0;
+        background: transparent;
+        color: var(--light);
+      }
+
+      .contact-form textarea { min-height: 5rem; resize: vertical; }
+      .contact-form input:focus, .contact-form textarea:focus { border-color: var(--accent); }
+      .contact-form ::placeholder { color: rgba(245, 225, 191, 0.5); }
+
+      .contact-form button {
+        border: 1px solid var(--light);
+        border-radius: 999px;
+        padding: 0.65rem 1.1rem;
+        background: var(--light);
+        color: var(--ink);
+        text-transform: uppercase;
+      }
+
+      .contact-form button:hover { background: var(--accent); border-color: var(--accent); color: var(--light); }
+
+      @media (max-width: 800px) {
+        .contact-panel { grid-template-columns: 1fr; overflow-y: auto; padding: 6rem 1.25rem 1.5rem; }
+        .contact-panel-col:first-child { min-height: 22rem; border-right: 0; border-bottom: 1px solid rgba(245, 225, 191, 0.7); padding-bottom: 2rem; }
+        .contact-send { align-self: start; }
+        .contact-send h2 { font-size: clamp(4rem, 22vw, 8rem); }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .contact-panel.is-open { transition: none; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="tp-nav-page">
+      <nav class="tp-nav">
+        <a class="tp-nav-logo" href="./" aria-label="Thai Palate home"><img src="./public/logo.jpg" alt="Thai Palate" /></a>
+        <button class="tp-nav-toggler" type="button" aria-expanded="false" aria-controls="tp-menu">Menu</button>
+      </nav>
+      <div class="tp-menu" id="tp-menu" aria-hidden="true">
+        <div class="tp-menu-content">
+          <div class="tp-menu-links">
+            <a href="./">Home</a>
+            <a href="./menu.html">Menu</a>
+            <a href="#">Our History</a>
+            <a href="./contact.html">Contact Us</a>
+          </div>
+          <div class="tp-menu-footer"><p>Locally sourced</p><p>Always welcome</p><p>Open every week</p></div>
+        </div>
+      </div>
+    </div>
+
+    <main class="contact-hero">
+      <div class="contact-heading">
+        <h1><span><span>Thai Palate</span></span><span><span>Contact Us</span></span></h1>
+        <p>We would love to hear from you</p>
+        <button class="contact-cta" id="contact-toggle" type="button">Get in touch</button>
+      </div>
+    </main>
+
+    <section class="contact-panel" aria-label="Contact Thai Palate">
+      <div class="contact-panel-col">
+        <a class="contact-brand" href="./">Thai Palate</a>
+        <div>
+          <p class="contact-about">For bookings, questions or feedback, send us a note and the Thai Palate team will get back to you.</p>
+          <div class="contact-copy"><span>[ get in touch ]</span><button id="contact-back" type="button">[ back ]</button></div>
+        </div>
+        <div class="contact-send"><h2>Contact</h2></div>
+      </div>
+
+      <div class="contact-form-wrap">
+        <h3>Contact Us</h3>
+        <form class="contact-form" action="" method="post">
+          <!-- Add the Formspree action URL here when ready. -->
+          <label for="name">Name*</label>
+          <input id="name" name="name" type="text" placeholder="First + surname" required />
+
+          <label for="email">Email*</label>
+          <input id="email" name="email" type="email" placeholder="you@example.com" required />
+
+          <label for="phone">Phone</label>
+          <input id="phone" name="phone" type="tel" placeholder="Optional" />
+
+          <label for="details">Details</label>
+          <textarea id="details" name="details" placeholder="How can we help?"></textarea>
+
+          <button type="submit">Send message</button>
+        </form>
+      </div>
+    </section>
+
+    <script type="module" src="./nav.js"></script>
+    <script>
+      const panel = document.querySelector(".contact-panel");
+      const toggle = document.querySelector("#contact-toggle");
+      const backButton = document.querySelector("#contact-back");
+      const form = document.querySelector(".contact-form");
+
+      toggle.addEventListener("click", () => {
+        panel.classList.add("is-open");
+      });
+
+      backButton.addEventListener("click", () => {
+        panel.classList.remove("is-open");
+      });
+
+      form.addEventListener("submit", (event) => {
+        event.preventDefault();
+      });
+    </script>
+  </body>
+</html>

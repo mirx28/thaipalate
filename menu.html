@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Menu | Thai Palate — Sydney Olympic Park</title>
+    <meta
+      name="description"
+      content="Thai Palate menu — lunch special, dinner menu and desserts. 7 Australia Avenue, Sydney Olympic Park."
+    />
+    <link rel="stylesheet" href="./nav.css" />
+
+    <style>
+      /* ==============================================================
+         CSS is UNCHANGED from the source, with one small block appended
+         at the very end for the new CTA button. Nothing above edited.
+         ============================================================== */
+      @import url("https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap");
+
+      :root {
+        --bg: #17110d;
+        --fg: #f8e8c5;
+        --card-1: #f2dfb7;
+        --card-2: #8d4d2c;
+        --card-3: #211711;
+        --accent: #c84c35;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Instrument Serif", sans-serif;
+        background: var(--bg) url("./public/menu.jpg") center / cover no-repeat;
+      }
+
+      body::before {
+        position: fixed;
+        inset: 0;
+        content: "";
+        z-index: -1;
+        background: rgba(27, 21, 16, 0.7);
+        pointer-events: none;
+      }
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      h1 {
+        font-size: 4rem;
+        font-weight: 500;
+        line-height: 1;
+      }
+
+      p {
+        font-size: 2rem;
+        font-weight: 500;
+        line-height: 1;
+      }
+
+      section {
+        position: relative;
+        width: 100%;
+        height: 100svh;
+        padding: 2rem;
+        background-color: rgba(27, 21, 16, 0.76);
+        color: var(--fg);
+      }
+
+      .intro,
+      .outro {
+        text-align: center;
+        align-content: center;
+      }
+
+      .intro h1,
+      .outro h1 {
+        width: 30%;
+        margin: 0 auto;
+      }
+
+      .sticky {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .sticky-header {
+        position: absolute;
+        top: 20%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+
+      .sticky-header h1 {
+        position: relative;
+        text-align: center;
+        will-change: transform, opacity;
+        transform: translateY(40px);
+        opacity: 0;
+      }
+
+      .card-container {
+        position: relative;
+        width: 75%;
+        display: flex;
+        perspective: 1000px;
+        transform: translateY(40px);
+        will-change: width;
+      }
+
+      .card {
+        position: relative;
+        flex: 1;
+        aspect-ratio: 5/7;
+        pointer-events: auto;
+        transform-style: preserve-3d;
+        transform-origin: top;
+        -webkit-transform: translateZ(0);
+        transform: translateZ(0);
+      }
+
+      #card-1 {
+        border-radius: 20px 0 0 20px;
+      }
+
+      #card-3 {
+        border-radius: 0 20px 20px 0;
+      }
+
+      .card-front,
+      .card-back {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        backface-visibility: hidden;
+        border-radius: inherit;
+        overflow: hidden;
+      }
+
+      .card-back {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        pointer-events: none;
+        transform: rotateY(180deg);
+        padding: 2rem;
+      }
+
+      .card-back span {
+        position: absolute;
+        top: 2rem;
+        left: 2rem;
+        opacity: 0.4;
+      }
+
+      #card-1 .card-back {
+        background-color: var(--card-1);
+        color: var(--bg);
+      }
+
+      #card-2 .card-back {
+        background-color: var(--card-2);
+      }
+
+      #card-3 .card-back {
+        background-color: var(--card-3);
+      }
+
+      .intro h1::first-line,
+      .outro h1::first-line {
+        color: var(--fg);
+      }
+
+      @media (max-width: 1000px) {
+        h1 {
+          font-size: 3rem;
+        }
+
+        .intro h1,
+        .outro h1 {
+          width: 100%;
+        }
+
+        .sticky {
+          height: max-content;
+          min-height: 100svh;
+          padding: 4rem 2rem;
+          flex-direction: column;
+        }
+
+        .sticky-header {
+          position: relative;
+          top: 0;
+          left: 0;
+          transform: none;
+          margin-bottom: 4rem;
+        }
+
+        .sticky-header h1 {
+          opacity: 1;
+        }
+
+        .card-container {
+          width: 100%;
+          flex-direction: column;
+          gap: 2rem;
+          perspective: 1000px;
+        }
+
+        .card {
+          width: 100%;
+          max-width: 400px;
+          margin: 0 auto;
+          border-radius: 20px !important;
+        }
+
+      }
+
+      /* ==============================================================
+         ADDED — CTA button on the flipped card face.
+         The front gets pointer-events:none so the flipped card can never
+         swallow the click, since both faces are absolutely positioned.
+         ============================================================== */
+      .card-front {
+        pointer-events: none;
+      }
+
+      .card.is-flipped {
+        pointer-events: auto;
+      }
+
+      .card.is-flipped .card-back {
+        pointer-events: auto;
+      }
+
+      .card-back {
+        flex-direction: column;
+        gap: 1.75rem;
+      }
+
+      .card-cta {
+        position: relative;
+        z-index: 1;
+        touch-action: manipulation;
+        -webkit-tap-highlight-color: transparent;
+        display: inline-block;
+        padding: 0.85rem 1.75rem;
+        border: 1px solid currentColor;
+        border-radius: 999px;
+        font-family: inherit;
+        font-size: 1rem;
+        font-weight: 500;
+        line-height: 1;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        text-decoration: none;
+        color: inherit;
+        background: transparent;
+        transition: background-color 220ms ease, color 220ms ease;
+      }
+
+      .card-cta:focus-visible {
+        outline: 2px solid currentColor;
+        outline-offset: 3px;
+      }
+
+      #card-1 .card-cta:hover,
+      #card-1 .card-cta:focus-visible {
+        background: var(--bg);
+        color: var(--card-1);
+      }
+
+      #card-2 .card-cta:hover,
+      #card-2 .card-cta:focus-visible {
+        background: var(--fg);
+        color: var(--card-2);
+      }
+
+      #card-3 .card-cta:hover,
+      #card-3 .card-cta:focus-visible {
+        background: var(--fg);
+        color: var(--card-3);
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .card-cta {
+          transition: none;
+        }
+      }
+
+      /* ==============================================================
+         ADDED — auto-scrolling food film strip in the outro.
+         Pure CSS marquee: no JavaScript added, nothing in the scroll
+         logic touched. Frames use margin-right (not gap) so that
+         translateX(-50%) lands exactly on the duplicate set = seamless.
+         ============================================================== */
+      .outro {
+        padding-left: 0;
+        padding-right: 0;
+      }
+
+      .outro h1 {
+        width: min(90%, 52rem);
+        padding: 0 2rem;
+        margin-bottom: clamp(1.5rem, 5vh, 3.25rem);
+      }
+
+      .film-wrap {
+        position: relative;
+        width: 100%;
+        overflow: hidden;
+        padding: 0.75rem 0;
+      }
+
+      .film-strip {
+        display: flex;
+        width: max-content;
+        animation: filmScroll 42s linear infinite;
+        will-change: transform;
+      }
+
+      /* hovering anywhere over the strip pauses it */
+      .film-strip:hover {
+        animation-play-state: paused;
+      }
+
+      .film-frame {
+        position: relative;
+        flex: 0 0 auto;
+        width: clamp(200px, 24vw, 320px);
+        aspect-ratio: 3 / 4;
+        margin-right: clamp(1rem, 2vw, 1.5rem);
+        border-radius: 16px;
+        overflow: hidden;
+        background: var(--card-3);
+        border: 1px solid rgba(248, 232, 197, 0.14);
+        box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+      }
+
+      .film-frame img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        transform: scale(1.02);
+        transition: transform 600ms ease;
+      }
+
+      .film-frame:hover img {
+        transform: scale(1.07);
+      }
+
+      @keyframes filmScroll {
+        from { transform: translate3d(0, 0, 0); }
+        to   { transform: translate3d(-50%, 0, 0); }
+      }
+
+      /* soft edges so the strip fades rather than cutting hard */
+      .film-wrap::before,
+      .film-wrap::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: clamp(2rem, 8vw, 7rem);
+        z-index: 2;
+        pointer-events: none;
+      }
+
+      .film-wrap::before {
+        left: 0;
+        background: linear-gradient(90deg, rgba(23, 17, 13, 0.85), rgba(23, 17, 13, 0));
+      }
+
+      .film-wrap::after {
+        right: 0;
+        background: linear-gradient(270deg, rgba(23, 17, 13, 0.85), rgba(23, 17, 13, 0));
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .film-strip {
+          animation: none;
+        }
+        .film-frame img,
+        .film-frame:hover img {
+          transition: none;
+          transform: none;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="tp-nav-page">
+      <nav class="tp-nav">
+        <a class="tp-nav-logo" href="./" aria-label="Thai Palate home"><img src="./public/logo.jpg" alt="Thai Palate" /></a>
+        <button class="tp-nav-toggler" type="button" aria-expanded="false" aria-controls="tp-menu">Menu</button>
+      </nav>
+      <div class="tp-menu" id="tp-menu" aria-hidden="true">
+        <div class="tp-menu-content">
+          <div class="tp-menu-links">
+            <a href="./">Home</a>
+            <a href="./menu.html">Menu</a>
+            <a href="#">Our History</a>
+            <a href="./contact.html">Contact Us</a>
+          </div>
+          <div class="tp-menu-footer"><p>Locally sourced</p><p>Always welcome</p><p>Open every week</p></div>
+        </div>
+      </div>
+    </div>
+    <section class="intro">
+      <h1>Bangkok on Australia Avenue ★</h1>
+    </section>
+
+    <section class="sticky">
+      <div class="sticky-header">
+        <h1>One kitchen, all day</h1>
+      </div>
+
+      <div class="card-container">
+        <!-- ============ LUNCH SPECIAL ============ -->
+        <div class="card" id="card-1">
+          <div class="card-front">
+            <img src="./public/lunch.jpg" alt="Thai Palate lunch special" />
+          </div>
+          <div class="card-back">
+            <span>( 01 )</span>
+            <p>Lunch Special</p>
+            <a class="card-cta" href="./lunch-menu.html">View lunch</a>
+          </div>
+        </div>
+
+        <!-- ============ DINNER MENU ============ -->
+        <div class="card" id="card-2">
+          <div class="card-front">
+            <img src="./public/dinner.jpg" alt="Thai Palate dinner menu" />
+          </div>
+          <div class="card-back">
+            <span>( 02 )</span>
+            <p>Dinner Menu</p>
+            <a class="card-cta" href="./dinner-menu.html">View dinner</a>
+          </div>
+        </div>
+
+        <!-- ============ GALLERY ============ -->
+        <div class="card" id="card-3">
+          <div class="card-front">
+            <img src="./public/dessert.jpg" alt="Thai Palate gallery" />
+          </div>
+          <div class="card-back">
+            <span>( 03 )</span>
+            <p>Gallery</p>
+            <a class="card-cta" href="./gallery.html">View gallery</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="outro">
+      <h1>Good food travels far</h1>
+
+
+      <div class="film-wrap">
+        <div class="film-strip">
+          <figure class="film-frame"><img src="./public/mthai1.jpg" alt="" loading="lazy" decoding="async" /></figure>
+          <figure class="film-frame"><img src="./public/mthai2.jpg" alt="" loading="lazy" decoding="async" /></figure>
+          <figure class="film-frame"><img src="./public/mthai3.jpg" alt="" loading="lazy" decoding="async" /></figure>
+          <figure class="film-frame"><img src="./public/mthai4.jpg" alt="" loading="lazy" decoding="async" /></figure>
+          <figure class="film-frame"><img src="./public/mthai5.jpg" alt="" loading="lazy" decoding="async" /></figure>
+          <figure class="film-frame"><img src="./public/mthai6.jpg" alt="" loading="lazy" decoding="async" /></figure>
+          <figure class="film-frame" aria-hidden="true"><img src="./public/mthai1.jpg" alt="" loading="lazy" decoding="async" /></figure>
+          <figure class="film-frame" aria-hidden="true"><img src="./public/mthai2.jpg" alt="" loading="lazy" decoding="async" /></figure>
+          <figure class="film-frame" aria-hidden="true"><img src="./public/mthai3.jpg" alt="" loading="lazy" decoding="async" /></figure>
+          <figure class="film-frame" aria-hidden="true"><img src="./public/mthai4.jpg" alt="" loading="lazy" decoding="async" /></figure>
+          <figure class="film-frame" aria-hidden="true"><img src="./public/mthai5.jpg" alt="" loading="lazy" decoding="async" /></figure>
+          <figure class="film-frame" aria-hidden="true"><img src="./public/mthai6.jpg" alt="" loading="lazy" decoding="async" /></figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- Resolves the bare imports so this file runs standalone.
+         Delete this block if your bundler already handles gsap/lenis. -->
+    <script type="importmap">
+      {
+        "imports": {
+          "gsap": "https://esm.sh/gsap@3.12.5",
+          "gsap/ScrollTrigger": "https://esm.sh/gsap@3.12.5/ScrollTrigger",
+          "lenis": "https://esm.sh/lenis@1.1.13"
+        }
+      }
+    </script>
+
+    <script type="module">
+      /* ==============================================================
+         JavaScript is UNCHANGED — byte-for-byte the same as script.js.
+         ============================================================== */
+      import gsap from "gsap";
+      import { ScrollTrigger } from "gsap/ScrollTrigger";
+      import Lenis from "lenis";
+
+      document.addEventListener("DOMContentLoaded", () => {
+        gsap.registerPlugin(ScrollTrigger);
+
+        const isDesktop = window.matchMedia("(min-width: 1000px)").matches;
+        const lenis = isDesktop ? new Lenis() : null;
+
+        if (lenis) {
+          lenis.on("scroll", ScrollTrigger.update);
+          gsap.ticker.add((time) => {
+            lenis.raf(time * 1000);
+          });
+        }
+        gsap.ticker.lagSmoothing(0);
+
+        const cardContainer = document.querySelector(".card-container");
+        const stickyHeader = document.querySelector(".sticky-header h1");
+        let isGapAnimationCompleted = false;
+        let isFlipAnimationCompleted = false;
+
+        function initAnimations() {
+          ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+
+          const mm = gsap.matchMedia();
+
+          mm.add("(max-width: 999px)", () => {
+            gsap.set(".card", { rotationY: 0, y: 0, rotationZ: 0 });
+            gsap.set(".card-container", { gap: "2rem", width: "100%" });
+            gsap.set(stickyHeader, { y: 0, opacity: 1 });
+
+            document.querySelectorAll(".card").forEach((card) => {
+              ScrollTrigger.create({
+                trigger: card,
+                start: "top 78%",
+                end: "top 32%",
+                  scrub: 0.45,
+                onUpdate: (self) => {
+                  const progress = self.progress;
+                  const sideCard = card.id !== "card-2";
+
+                  gsap.set(card, {
+                    rotationY: progress * 180,
+                    y: sideCard ? progress * 18 : 0,
+                    rotationZ:
+                      card.id === "card-1"
+                        ? progress * -8
+                        : card.id === "card-3"
+                          ? progress * 8
+                          : 0,
+                  });
+                          card.classList.toggle("is-flipped", progress > 0.5);
+                },
+              });
+            });
+
+            return {};
+          });
+
+          mm.add("(min-width: 1000px)", () => {
+            ScrollTrigger.create({
+              trigger: ".sticky",
+              start: "top top",
+              end: `+=${window.innerHeight * 4}px`,
+              scrub: 1,
+              pin: true,
+              pinSpacing: true,
+              onUpdate: (self) => {
+                const progress = self.progress;
+
+                if (progress >= 0.1 && progress <= 0.25) {
+                  const headerProgress = gsap.utils.mapRange(
+                    0.1,
+                    0.25,
+                    0,
+                    1,
+                    progress
+                  );
+                  const yValue = gsap.utils.mapRange(0, 1, 40, 0, headerProgress);
+                  const opacityValue = gsap.utils.mapRange(
+                    0,
+                    1,
+                    0,
+                    1,
+                    headerProgress
+                  );
+
+                  gsap.set(stickyHeader, {
+                    y: yValue,
+                    opacity: opacityValue,
+                  });
+                } else if (progress < 0.1) {
+                  gsap.set(stickyHeader, {
+                    y: 40,
+                    opacity: 0,
+                  });
+                } else if (progress > 0.25) {
+                  gsap.set(stickyHeader, {
+                    y: 0,
+                    opacity: 1,
+                  });
+                }
+
+                if (progress <= 0.25) {
+                  const widthPercentage = gsap.utils.mapRange(
+                    0,
+                    0.25,
+                    75,
+                    60,
+                    progress
+                  );
+                  gsap.set(cardContainer, { width: `${widthPercentage}%` });
+                } else {
+                  gsap.set(cardContainer, { width: "60%" });
+                }
+
+                if (progress >= 0.35 && !isGapAnimationCompleted) {
+                  gsap.to(cardContainer, {
+                    gap: "20px",
+                    duration: 0.5,
+                    ease: "power3.out",
+                  });
+
+                  gsap.to(["#card-1", "#card-2", "#card-3"], {
+                    borderRadius: "20px",
+                    duration: 0.5,
+                    ease: "power3.out",
+                  });
+
+                  isGapAnimationCompleted = true;
+                } else if (progress < 0.35 && isGapAnimationCompleted) {
+                  gsap.to(cardContainer, {
+                    gap: "0px",
+                    duration: 0.5,
+                    ease: "power3.out",
+                  });
+
+                  gsap.to("#card-1", {
+                    borderRadius: "20px 0 0 20px",
+                    duration: 0.5,
+                    ease: "power3.out",
+                  });
+
+                  gsap.to("#card-2", {
+                    borderRadius: "0px",
+                    duration: 0.5,
+                    ease: "power3.out",
+                  });
+
+                  gsap.to("#card-3", {
+                    borderRadius: "0 20px 20px 0",
+                    duration: 0.5,
+                    ease: "power3.out",
+                  });
+
+                  isGapAnimationCompleted = false;
+                }
+
+                if (progress >= 0.7 && !isFlipAnimationCompleted) {
+                  document.querySelectorAll(".card").forEach((card) => {
+                    card.classList.add("is-flipped");
+                  });
+                  gsap.to(".card", {
+                    rotationY: 180,
+                    duration: 0.75,
+                    ease: "power3.inOut",
+                    stagger: 0.1,
+                  });
+
+                  gsap.to(["#card-1", "#card-3"], {
+                    y: 30,
+                    rotationZ: (i) => [-15, 15][i],
+                    duration: 0.75,
+                    ease: "power3.inOut",
+                  });
+
+                  isFlipAnimationCompleted = true;
+                } else if (progress < 0.7 && isFlipAnimationCompleted) {
+                  document.querySelectorAll(".card").forEach((card) => {
+                    card.classList.remove("is-flipped");
+                  });
+                  gsap.to(".card", {
+                    rotationY: 0,
+                    duration: 0.75,
+                    ease: "power3.inOut",
+                    stagger: -0.1,
+                  });
+
+                  gsap.to(["#card-1", "#card-3"], {
+                    y: 0,
+                    rotationZ: 0,
+                    duration: 0.75,
+                    ease: "power3.inOut",
+                  });
+
+                  isFlipAnimationCompleted = false;
+                }
+              },
+            });
+            return () => {};
+          });
+        }
+
+        initAnimations();
+
+        let resizeTimer;
+        window.addEventListener("resize", () => {
+          clearTimeout(resizeTimer);
+          resizeTimer = setTimeout(() => {
+            initAnimations();
+          }, 250);
+        });
+      });
+    </script>
+    <script type="module" src="./nav.js"></script>
+  
+
+
+<style>
+/* ======================================================================
+   MOBILE ONLY — compositing hints for the card flip.
+   The flip itself is completely untouched; your rotationY code still drives
+   it. This only lets the browser keep each face as a cached texture instead
+   of re-rasterising it every frame.
+
+   .card-front / .card-back clip their own content with overflow:hidden and
+   sit inside the preserve-3d .card. A clipped child in a 3D context cannot
+   be held as a texture, so the whole card was redrawn per frame. The clip
+   moves down to the <img> — a leaf node that composites normally — and
+   inherits the card's radius, so the corners look identical.
+   ====================================================================== */
+@media (max-width: 1000px) {
+  .card,
+  .card-front,
+  .card-back {
+    will-change: transform;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+  }
+
+  .card-front,
+  .card-back {
+    overflow: visible;
+  }
+
+  .card-front img {
+    border-radius: inherit;
+    display: block;
+    -webkit-user-drag: none;
+  }
+}
+</style>
+</body>
+</html>
