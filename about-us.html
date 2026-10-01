@@ -1,0 +1,373 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#34251d" />
+    <title>Our Story | Thai Palate — Sydney Olympic Park</title>
+    <meta name="description" content="Thai Palate opened on Australia Avenue in 2015, serving bright, generous Thai food made to be shared." />
+    <link rel="stylesheet" href="./nav.css" />
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap");
+
+      :root {
+        color-scheme: dark;
+        --story-bg: #34251d;
+        --story-deep: #241912;
+        --story-panel: #493327;
+        --story-cream: #f4e5cf;
+        --story-muted: #c9b49b;
+        --story-rust: #d2764e;
+        --story-gold: #d3a66c;
+      }
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+
+      html {
+        background: var(--story-bg);
+        scroll-behavior: smooth;
+      }
+
+      body {
+        margin: 0;
+        background: var(--story-bg);
+        color: var(--story-cream);
+        font-family: "Instrument Sans", sans-serif;
+      }
+
+      .story-intro,
+      .story-outro {
+        min-height: 100svh;
+        padding: 9rem max(1.5rem, calc((100vw - 78rem) / 2)) 5rem;
+        display: grid;
+        align-content: center;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .story-intro {
+        background:
+          linear-gradient(90deg, rgba(36, 25, 18, 0.94), rgba(36, 25, 18, 0.48)),
+          url("./public/thai1.jpg") center 54% / cover;
+      }
+
+      .story-kicker,
+      .story-outro-label {
+        margin: 0 0 1.25rem;
+        color: var(--story-gold);
+        font-size: 0.75rem;
+        font-weight: 600;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+      }
+
+      .story-intro h1,
+      .story-outro h2 {
+        max-width: 11ch;
+        margin: 0;
+        font-family: "Instrument Serif", serif;
+        font-size: clamp(4rem, 10vw, 9rem);
+        font-weight: 400;
+        line-height: 0.88;
+      }
+
+      .story-intro h1 em,
+      .story-outro h2 em {
+        color: var(--story-rust);
+        font-weight: 400;
+      }
+
+      .story-lede {
+        max-width: 39rem;
+        margin: 2rem 0 0;
+        color: var(--story-cream);
+        font-size: clamp(1.05rem, 1.6vw, 1.3rem);
+        line-height: 1.6;
+      }
+
+      .story-scroll-note {
+        position: absolute;
+        right: max(1.5rem, calc((100vw - 78rem) / 2));
+        bottom: 2.5rem;
+        color: var(--story-muted);
+        font-size: 0.7rem;
+        letter-spacing: 0.13em;
+        text-transform: uppercase;
+      }
+
+      .story-gallery {
+        position: relative;
+        padding: clamp(4rem, 8vw, 7rem) max(1.5rem, calc((100vw - 88rem) / 2));
+        background: var(--story-deep);
+      }
+
+      .story-gallery-heading {
+        margin: 0 auto 2rem;
+        max-width: 88rem;
+      }
+
+      .story-gallery-heading h2 {
+        max-width: 14ch;
+        margin: 0;
+        font-family: "Instrument Serif", serif;
+        font-size: clamp(3rem, 6vw, 5.5rem);
+        font-weight: 400;
+        line-height: 0.95;
+      }
+
+      .story-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 1rem;
+        max-width: 88rem;
+        margin: 0 auto;
+      }
+
+      .story-chapter {
+        position: relative;
+        min-width: 0;
+        aspect-ratio: 0.76;
+        overflow: hidden;
+        background: var(--story-panel);
+      }
+
+      .story-chapter::after {
+        position: absolute;
+        inset: 0;
+        content: "";
+        background: linear-gradient(180deg, transparent 22%, rgba(25, 18, 14, 0.2) 48%, rgba(25, 18, 14, 0.9));
+        pointer-events: none;
+      }
+
+      .story-chapter img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 700ms cubic-bezier(0.2, 0.65, 0.3, 1);
+      }
+
+      .story-chapter:hover img {
+        transform: scale(1.035);
+      }
+
+      .story-chapter-copy {
+        position: absolute;
+        z-index: 1;
+        right: 1.25rem;
+        bottom: 1.35rem;
+        left: 1.25rem;
+        color: var(--story-cream);
+      }
+
+      .caption-count {
+        display: block;
+        margin-bottom: 0.65rem;
+        color: var(--story-gold);
+        font-size: 0.66rem;
+        font-weight: 600;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+      }
+
+      .story-chapter h3 {
+        max-width: 15ch;
+        margin: 0;
+        font-family: "Instrument Serif", serif;
+        font-size: clamp(1.7rem, 2.4vw, 2.45rem);
+        font-weight: 400;
+        line-height: 1;
+      }
+
+      .story-chapter p {
+        margin: 0.6rem 0 0;
+        color: rgba(244, 229, 207, 0.88);
+        font-size: 0.78rem;
+        line-height: 1.5;
+      }
+
+      .story-outro {
+        min-height: 85svh;
+        grid-template-columns: minmax(0, 1fr) minmax(15rem, 0.72fr);
+        align-items: center;
+        gap: clamp(2rem, 8vw, 9rem);
+        background: var(--story-panel);
+      }
+
+      .story-outro h2 {
+        font-size: clamp(3.5rem, 8vw, 7rem);
+      }
+
+      .story-details {
+        max-width: 31rem;
+      }
+
+      .story-details p {
+        margin: 0 0 1.15rem;
+        color: var(--story-cream);
+        font-size: 1rem;
+        line-height: 1.75;
+      }
+
+      .story-address {
+        display: inline-block;
+        margin-top: 0.5rem;
+        color: var(--story-gold);
+        font-size: 0.75rem;
+        letter-spacing: 0.12em;
+        text-decoration-thickness: 1px;
+        text-underline-offset: 0.35em;
+        text-transform: uppercase;
+      }
+
+      @media (max-width: 700px) {
+        .story-intro,
+        .story-outro {
+          padding: 8rem 1.4rem 4rem;
+        }
+
+        .story-intro {
+          background-position: 58% center;
+        }
+
+        .story-intro h1 {
+          font-size: clamp(4rem, 18vw, 6rem);
+        }
+
+        .story-lede {
+          max-width: 32rem;
+          margin-top: 1.4rem;
+          font-size: 1rem;
+        }
+
+        .story-scroll-note {
+          right: 1.4rem;
+          bottom: 1.5rem;
+        }
+
+        .story-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          gap: 0.75rem;
+        }
+
+        .story-chapter-copy {
+          right: 0.9rem;
+          bottom: 1rem;
+          left: 0.9rem;
+        }
+
+        .story-chapter h3 {
+          font-size: clamp(1.4rem, 5.5vw, 2rem);
+        }
+
+        .story-chapter p {
+          font-size: 0.72rem;
+        }
+
+        .story-outro {
+          min-height: auto;
+          grid-template-columns: 1fr;
+          gap: 2rem;
+          padding-top: 6rem;
+          padding-bottom: 6rem;
+        }
+
+        .story-outro h2 {
+          font-size: clamp(3.6rem, 16vw, 5.5rem);
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        html { scroll-behavior: auto; }
+        .story-chapter img { transition: none; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="tp-nav-page">
+      <nav class="tp-nav">
+        <a class="tp-nav-logo" href="./" aria-label="Thai Palate home"><img src="./public/logo.jpg" alt="Thai Palate" /></a>
+        <button class="tp-nav-toggler" type="button" aria-expanded="false" aria-controls="tp-menu">Menu</button>
+      </nav>
+      <div class="tp-menu" id="tp-menu" aria-hidden="true">
+        <div class="tp-menu-content">
+          <div class="tp-menu-links">
+            <a href="./">Home</a>
+            <a href="./menu.html">Menu</a>
+            <a href="./about-us.html">Our History</a>
+            <a href="./contact.html">Contact Us</a>
+          </div>
+          <div class="tp-menu-footer"><p>Locally sourced</p><p>Always welcome</p><p>Open every week</p></div>
+        </div>
+      </div>
+    </div>
+
+    <main>
+      <section class="story-intro" aria-labelledby="story-title">
+        <p class="story-kicker">Thai Palate · Sydney Olympic Park · Since 2015</p>
+        <h1 id="story-title">Thai food,<br /><em>made to share.</em></h1>
+        <p class="story-lede">We opened on Australia Avenue with a simple idea: cook Thai food the way it is eaten in Thailand — bright, generous, and made for the middle of the table.</p>
+        <p class="story-scroll-note">Scroll to follow the story</p>
+      </section>
+
+      <section class="story-gallery" aria-labelledby="story-gallery-title">
+        <header class="story-gallery-heading">
+          <p class="story-kicker">Thai Palate · Since 2015</p>
+          <h2 id="story-gallery-title">Four moments, one shared table.</h2>
+        </header>
+        <div class="story-grid">
+          <article class="story-chapter">
+            <img src="./public/set1/img1.jpg" alt="Thai Palate chef preparing food in a wok" loading="lazy" decoding="async" />
+            <div class="story-chapter-copy">
+              <span class="caption-count">2015 · The beginning</span>
+              <h3>Established in 2015</h3>
+              <p>Thai Palate opened on Australia Avenue with bright, generous Thai food made to share.</p>
+            </div>
+          </article>
+          <article class="story-chapter">
+            <img src="./public/set2/img1.jpg" alt="A Thai curry served with fresh herbs" loading="lazy" decoding="async" />
+            <div class="story-chapter-copy">
+              <span class="caption-count">From our kitchen</span>
+              <h3>A hundred ways to gather</h3>
+              <p>Slow coconut curries, crisp whole snapper, prawns with chilli jam and basil, and lime-bright salads.</p>
+            </div>
+          </article>
+          <article class="story-chapter">
+            <img src="./public/set3/img1.jpg" alt="Thai Palate dish prepared for a shared table" loading="lazy" decoding="async" />
+            <div class="story-chapter-copy">
+              <span class="caption-count">58 seats · One kitchen</span>
+              <h3>A room with a rhythm</h3>
+              <p>Concert nights bring a full house; lunch is quieter, with familiar plates made to order.</p>
+            </div>
+          </article>
+          <article class="story-chapter">
+            <img src="./public/set4/img1.jpg" alt="Thai food prepared at Thai Palate" loading="lazy" decoding="async" />
+            <div class="story-chapter-copy">
+              <span class="caption-count">Sydney Olympic Park</span>
+              <h3>Just around the corner</h3>
+              <p>A short walk from the station and arena. Come before the show, after it, or on an ordinary Tuesday.</p>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="story-outro" aria-labelledby="story-outro-title">
+        <div>
+          <p class="story-outro-label">A small room, a full table</p>
+          <h2 id="story-outro-title">Come as<br /><em>you are.</em></h2>
+        </div>
+        <div class="story-details">
+          <p>We’re a 58-seat room, and we like it that way. On concert nights the pass gets loud; at lunch, locals settle in over tom yum and pad see ew. Same kitchen, same hands, same food.</p>
+          <p>Find us a short walk from the station and around the corner from the arena. Come before the show, after it, or on a Tuesday when there’s no reason at all.</p>
+          <a class="story-address" href="https://maps.app.goo.gl/caWjrGrzkAAFTEAe6" target="_blank" rel="noopener noreferrer">7 Australia Avenue · Get directions</a>
+        </div>
+      </section>
+    </main>
+
+    <script type="module" src="./nav.js"></script>
+  </body>
+</html>

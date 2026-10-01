@@ -1,0 +1,473 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gallery | Thai Palate</title>
+    <meta name="description" content="Thai Palate gallery in Sydney Olympic Park." />
+    <link rel="stylesheet" href="./nav.css" />
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Instrument+Sans:wght@400;500;600&display=swap");
+
+      :root {
+        --ink: #f4ead7;
+        --muted: rgba(244, 234, 215, 0.62);
+        --background: #17110d;
+        --accent: #c84c35;
+      }
+
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+
+      html, body { width: 100%; min-height: 100%; }
+
+      body {
+        background:
+          radial-gradient(100% 80% at 50% 0%, rgba(200, 76, 53, 0.14), transparent 65%),
+          var(--background);
+        color: var(--ink);
+        font-family: "Instrument Sans", sans-serif;
+      }
+
+      .gallery {
+        width: 100%;
+        min-height: 100svh;
+        padding: 8rem clamp(1rem, 4vw, 4rem) 4rem;
+      }
+
+      .gallery-heading {
+        display: flex;
+        align-items: end;
+        justify-content: space-between;
+        gap: 1.5rem;
+        max-width: 88rem;
+        margin: 0 auto 2rem;
+      }
+
+      .gallery-heading h1 {
+        color: var(--ink);
+        font-family: "Instrument Serif", serif;
+        font-size: clamp(3rem, 7vw, 6rem);
+        font-weight: 400;
+        line-height: 0.9;
+      }
+
+      .gallery-heading p {
+        max-width: 24rem;
+        padding-bottom: 0.3rem;
+        color: var(--muted);
+        font-size: 0.88rem;
+        line-height: 1.6;
+      }
+
+      .gallery-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: clamp(1rem, 2.2vw, 2rem);
+        max-width: 88rem;
+        margin: 0 auto;
+      }
+
+      .gallery-item { min-width: 0; }
+
+      .gallery-item img {
+        display: block;
+        width: 100%;
+        aspect-ratio: 4 / 3;
+        border-radius: 4px;
+        background: #33251d;
+        object-fit: cover;
+      }
+
+      .gallery-item figcaption {
+        width: fit-content;
+        max-width: 100%;
+        margin-top: 0.65rem;
+        color: var(--ink);
+        font-family: "Instrument Serif", serif;
+        font-size: clamp(1.1rem, 1.6vw, 1.4rem);
+        line-height: 1.2;
+      }
+
+      .gallery-mark {
+        position: absolute;
+        top: 1.5rem;
+        left: clamp(1rem, 4vw, 4rem);
+        color: var(--muted);
+        font-family: "Instrument Serif", serif;
+        font-size: 1.5rem;
+      }
+
+      .gallery-mark span { color: var(--accent); }
+
+      @media (max-width: 900px) {
+        .gallery-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      }
+
+      @media (max-width: 600px) {
+        .gallery { padding: 7rem 1rem 2rem; }
+        .gallery-heading { display: block; margin-bottom: 1.35rem; }
+        .gallery-heading h1 { font-size: 3.4rem; }
+        .gallery-heading p { margin-top: 0.7rem; }
+        .gallery-grid { grid-template-columns: minmax(0, 1fr); gap: 1.3rem; }
+        .gallery-item img { aspect-ratio: 1 / 0.82; }
+        .gallery-mark { top: 1rem; left: 1rem; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="tp-nav-page">
+      <nav class="tp-nav">
+        <a class="tp-nav-logo" href="./" aria-label="Thai Palate home"><img src="./public/logo.jpg" alt="Thai Palate" /></a>
+        <button class="tp-nav-toggler" type="button" aria-expanded="false" aria-controls="tp-menu">Menu</button>
+      </nav>
+      <div class="tp-menu" id="tp-menu" aria-hidden="true">
+        <div class="tp-menu-content">
+          <div class="tp-menu-links">
+            <a href="./">Home</a>
+            <a href="./menu.html">Menu</a>
+            <a href="./about-us.html">Our History</a>
+            <a href="./contact.html">Contact Us</a>
+          </div>
+          <div class="tp-menu-footer"><p>Locally sourced</p><p>Always welcome</p><p>Open every week</p></div>
+        </div>
+      </div>
+    </div>
+    <main class="gallery" aria-label="Thai Palate image gallery">
+      <p class="gallery-mark">Thai Palate <span>/</span> Gallery</p>
+      <header class="gallery-heading">
+        <h1>From our kitchen</h1>
+        <p>Thai favourites, prepared with care and made to be shared.</p>
+      </header>
+      <div class="gallery-grid">
+        <figure class="gallery-item"><img src="./public/gallery1.jpg" alt="Crying tiger" loading="lazy" decoding="async" /><figcaption>Crying Tiger</figcaption></figure>
+        <figure class="gallery-item"><img src="./public/gallery2.jpg" alt="Eggplant with chilli basil sauce" loading="lazy" decoding="async" /><figcaption>Eggplant Chilli Basil Sauce</figcaption></figure>
+        <figure class="gallery-item"><img src="./public/gallery3.jpg" alt="Yellow curry" loading="lazy" decoding="async" /><figcaption>Yellow Curry</figcaption></figure>
+        <figure class="gallery-item"><img src="./public/gallery4.jpg" alt="Massaman curry" loading="lazy" decoding="async" /><figcaption>Massaman Curry</figcaption></figure>
+        <figure class="gallery-item"><img src="./public/gallery5.jpg" alt="Homok" loading="lazy" decoding="async" /><figcaption>Homok</figcaption></figure>
+        <figure class="gallery-item"><img src="./public/gallery6.jpg" alt="Pad Thai" loading="lazy" decoding="async" /><figcaption>Pad Thai</figcaption></figure>
+        <figure class="gallery-item"><img src="./public/gallery7.jpg" alt="Tom yum fried rice" loading="lazy" decoding="async" /><figcaption>Tom Yum Fried Rice</figcaption></figure>
+        <figure class="gallery-item"><img src="./public/gallery8.jpg" alt="Mango sticky rice" loading="lazy" decoding="async" /><figcaption>Mango Sticky Rice</figcaption></figure>
+        <figure class="gallery-item"><img src="./public/gallery9.jpg" alt="Money bags" loading="lazy" decoding="async" /><figcaption>Money Bags</figcaption></figure>
+        <figure class="gallery-item"><img src="./public/gallery10.jpg" alt="Coconut prawns" loading="lazy" decoding="async" /><figcaption>Coconut Prawns</figcaption></figure>
+        <figure class="gallery-item"><img src="./public/gallery11.jpg" alt="Gai yang" loading="lazy" decoding="async" /><figcaption>Gai Yang</figcaption></figure>
+        <figure class="gallery-item"><img src="./public/gallery12.jpg" alt="Salt and pepper squid" loading="lazy" decoding="async" /><figcaption>Salt &amp; Pepper Squid</figcaption></figure>
+        <figure class="gallery-item"><img src="./public/gallery13.jpg" alt="Chilli mussels" loading="lazy" decoding="async" /><figcaption>Chilli Mussels</figcaption></figure>
+        <figure class="gallery-item"><img src="./public/gallery14.jpg" alt="Snapper with three flavour sauce" loading="lazy" decoding="async" /><figcaption>Snapper Three Flavour Sauce</figcaption></figure>
+        <figure class="gallery-item"><img src="./public/gallery15.jpg" alt="Fried ice cream" loading="lazy" decoding="async" /><figcaption>Fried Ice Cream</figcaption></figure>
+        <figure class="gallery-item"><img src="./public/gallery16.jpg" alt="Kana moo grob" loading="lazy" decoding="async" /><figcaption>Kana Moo Grob</figcaption></figure>
+        <figure class="gallery-item"><img src="./public/gallery17.jpg" alt="Chicken wings" loading="lazy" decoding="async" /><figcaption>Chicken Wings</figcaption></figure>
+        <figure class="gallery-item"><img src="./public/gallery18.jpg" alt="Garlic and pepper chicken and prawn" loading="lazy" decoding="async" /><figcaption>Garlic &amp; Pepper Chicken and Prawn</figcaption></figure>
+        <figure class="gallery-item"><img src="./public/gallery19.jpg" alt="Pineapple fried rice" loading="lazy" decoding="async" /><figcaption>Pineapple Fried Rice</figcaption></figure>
+        <figure class="gallery-item"><img src="./public/gallery20.jpg" alt="Prawn tamarind" loading="lazy" decoding="async" /><figcaption>Prawn Tamarind</figcaption></figure>
+        <figure class="gallery-item"><img src="./public/gallery21.jpg" alt="Lamb cutlets" loading="lazy" decoding="async" /><figcaption>Lamb Cutlets</figcaption></figure>
+      </div>
+    </main>
+
+    <script type="application/json">
+      { "imports": { "three": "https://esm.sh/three@0.180.0" } }
+    </script>
+
+    <script type="text/plain">
+      import * as THREE from "three";
+
+      const dishNames = [
+        "Crying Tiger",
+        "Eggplant chili basil sauce",
+        "Yellow Curry",
+        "Massamun Curry",
+        "Homok",
+        "Pad Thai",
+        "Tom yum fried rice",
+        "Mango sticky rice",
+        "Money bag",
+        "Coconut prawn",
+        "Gai Yang",
+        "Salt & pepper squid",
+        "Chilli mussels",
+        "snapper three flavour sauce",
+        "Fried ice cream",
+        "Kana Moo grob",
+        "Chicken wings",
+        "Garlic & pepper chicken and prawn",
+        "Pineapple fried rice",
+        "prawn Tamarind",
+        "Lamb Cutlets",
+      ];
+
+      const slides = dishNames.map((name, index) => ({
+        name,
+        img: `./public/gallery${index + 1}.jpg`,
+      }));
+
+      const config = {
+        minHeight: 1,
+        maxHeight: 1.5,
+        aspectRatio: 1.5,
+        gap: 0.05,
+        smoothing: 0.05,
+        distortionStrength: 2.5,
+        distortionSmoothing: 0.1,
+        momentumFriction: 0.95,
+        momentumThreshold: 0.001,
+        wheelSpeed: 0.01,
+        wheelMax: 150,
+        dragSpeed: 0.01,
+        dragMomentum: 0.01,
+        touchSpeed: 0.01,
+        touchMomentum: 0.1,
+      };
+
+      const canvas = document.querySelector("canvas");
+      const titleElement = document.querySelector("#slide-title");
+      const counterElement = document.querySelector("#slide-count");
+
+      const renderer = new THREE.WebGLRenderer({
+        canvas,
+        antialias: true,
+        preserveDrawingBuffer: true,
+      });
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+      const scene = new THREE.Scene();
+      scene.background = new THREE.Color(0x17110d);
+
+      const camera = new THREE.PerspectiveCamera(
+        45,
+        window.innerWidth / window.innerHeight,
+        0.1,
+        100,
+      );
+      camera.position.z = 5;
+
+      const wrap = (value, range) => ((value % range) + range) % range;
+      const totalSlides = slides.length;
+      const slideHeights = Array.from(
+        { length: totalSlides },
+        () => config.minHeight + Math.random() * (config.maxHeight - config.minHeight),
+      );
+      const slideOffsets = [];
+      let stackPosition = 0;
+
+      for (let index = 0; index < totalSlides; index++) {
+        if (index === 0) {
+          slideOffsets.push(0);
+          stackPosition = slideHeights[0] / 2;
+        } else {
+          stackPosition += config.gap + slideHeights[index] / 2;
+          slideOffsets.push(stackPosition);
+          stackPosition += slideHeights[index] / 2;
+        }
+      }
+
+      const loopLength = stackPosition + config.gap + slideHeights[0] / 2;
+      const halfLoop = loopLength / 2;
+      const meshes = [];
+      const textureLoader = new THREE.TextureLoader();
+
+      for (let index = 0; index < totalSlides; index++) {
+        const height = slideHeights[index];
+        const width = height * config.aspectRatio;
+        const geometry = new THREE.PlaneGeometry(width, height, 32, 16);
+        const material = new THREE.MeshBasicMaterial({
+          side: THREE.DoubleSide,
+          color: 0x999999,
+        });
+        const mesh = new THREE.Mesh(geometry, material);
+
+        mesh.userData = {
+          originalVertices: [...geometry.attributes.position.array],
+          offset: slideOffsets[index],
+          name: slides[index].name,
+          index,
+        };
+
+        textureLoader.load(slides[index].img, (texture) => {
+          texture.colorSpace = THREE.SRGBColorSpace;
+          material.map = texture;
+          material.color.set(0xffffff);
+          material.needsUpdate = true;
+
+          const imageAspect = texture.image.width / texture.image.height;
+          const planeAspect = width / height;
+          const ratio = imageAspect / planeAspect;
+
+          if (ratio > 1) mesh.scale.y = 1 / ratio;
+          else mesh.scale.x = ratio;
+        });
+
+        scene.add(mesh);
+        meshes.push(mesh);
+      }
+
+      function applyDistortion(mesh, positionY, strength) {
+        const positions = mesh.geometry.attributes.position;
+        const original = mesh.userData.originalVertices;
+
+        for (let index = 0; index < positions.count; index++) {
+          const x = original[index * 3];
+          const y = original[index * 3 + 1];
+          const distance = Math.sqrt(x * x + (positionY + y) ** 2);
+          const falloff = Math.max(0, 1 - distance / 2);
+          const bend = Math.pow(Math.sin((falloff * Math.PI) / 2), 1.5);
+          positions.setZ(index, bend * strength);
+        }
+
+        positions.needsUpdate = true;
+        mesh.geometry.computeVertexNormals();
+      }
+
+      let scrollPosition = 0;
+      let scrollTarget = 0;
+      let scrollMomentum = 0;
+      let isScrolling = false;
+      let lastFrameTime = 0;
+      let distortionAmount = 0;
+      let distortionTarget = 0;
+      let velocityPeak = 0;
+      let scrollDirection = 0;
+      let directionTarget = 0;
+      const velocityHistory = [0, 0, 0, 0, 0];
+      let isDragging = false;
+      let dragStartY = 0;
+      let dragDelta = 0;
+      let touchStartY = 0;
+      let touchLastY = 0;
+      let activeSlideIndex = -1;
+
+      const addDistortionBurst = (amount) => {
+        distortionTarget = Math.min(1, distortionTarget + amount);
+      };
+
+      window.addEventListener("wheel", (event) => {
+        event.preventDefault();
+        const clampedDelta = Math.sign(event.deltaY) * Math.min(Math.abs(event.deltaY), config.wheelMax);
+        addDistortionBurst(Math.abs(clampedDelta) * 0.001);
+        scrollTarget += clampedDelta * config.wheelSpeed;
+        isScrolling = true;
+        clearTimeout(window._scrollTimeout);
+        window._scrollTimeout = setTimeout(() => (isScrolling = false), 150);
+      }, { passive: false });
+
+      window.addEventListener("touchstart", (event) => {
+        touchStartY = touchLastY = event.touches[0].clientY;
+        isScrolling = false;
+        scrollMomentum = 0;
+      }, { passive: false });
+
+      window.addEventListener("touchmove", (event) => {
+        event.preventDefault();
+        const deltaY = event.touches[0].clientY - touchLastY;
+        touchLastY = event.touches[0].clientY;
+        addDistortionBurst(Math.abs(deltaY) * 0.02);
+        scrollTarget -= deltaY * config.touchSpeed;
+        isScrolling = true;
+      }, { passive: false });
+
+      window.addEventListener("touchend", () => {
+        const swipeVelocity = (touchLastY - touchStartY) * 0.005;
+        if (Math.abs(swipeVelocity) > 0.5) {
+          scrollMomentum = -swipeVelocity * config.touchMomentum;
+          addDistortionBurst(Math.abs(swipeVelocity) * 0.45);
+          isScrolling = true;
+          setTimeout(() => (isScrolling = false), 800);
+        }
+      });
+
+      window.addEventListener("mousedown", (event) => {
+        isDragging = true;
+        dragStartY = event.clientY;
+        dragDelta = 0;
+        scrollMomentum = 0;
+      });
+
+      window.addEventListener("mousemove", (event) => {
+        if (!isDragging) return;
+        const deltaY = event.clientY - dragStartY;
+        dragStartY = event.clientY;
+        dragDelta = deltaY;
+        addDistortionBurst(Math.abs(deltaY) * 0.02);
+        scrollTarget -= deltaY * config.dragSpeed;
+        isScrolling = true;
+      });
+
+      window.addEventListener("mouseup", () => {
+        if (!isDragging) return;
+        isDragging = false;
+        if (Math.abs(dragDelta) > 2) {
+          scrollMomentum = -dragDelta * config.dragMomentum;
+          addDistortionBurst(Math.abs(dragDelta) * 0.005);
+          isScrolling = true;
+          setTimeout(() => (isScrolling = false), 800);
+        }
+      });
+
+      window.addEventListener("resize", () => {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+      });
+
+      function animate(time) {
+        requestAnimationFrame(animate);
+        const deltaTime = lastFrameTime ? (time - lastFrameTime) / 1000 : 0.016;
+        lastFrameTime = time;
+        const previousScroll = scrollPosition;
+
+        if (isScrolling) {
+          scrollTarget += scrollMomentum;
+          scrollMomentum *= config.momentumFriction;
+          if (Math.abs(scrollMomentum) < config.momentumThreshold) scrollMomentum = 0;
+        }
+
+        scrollPosition += (scrollTarget - scrollPosition) * config.smoothing;
+        const frameDelta = scrollPosition - previousScroll;
+        if (Math.abs(frameDelta) > 0.00001) directionTarget = frameDelta > 0 ? 1 : -1;
+        scrollDirection += (directionTarget - scrollDirection) * 0.08;
+
+        const velocity = Math.abs(frameDelta) / deltaTime;
+        velocityHistory.push(velocity);
+        velocityHistory.shift();
+        const averageVelocity = velocityHistory.reduce((sum, value) => sum + value) / velocityHistory.length;
+        if (averageVelocity > velocityPeak) velocityPeak = averageVelocity;
+
+        const isDecelerating = averageVelocity / (velocityPeak + 0.001) < 0.7 && velocityPeak > 0.5;
+        velocityPeak *= 0.99;
+        if (velocity > 0.05) distortionTarget = Math.max(distortionTarget, Math.min(1, velocity * 0.1));
+        if (isDecelerating || averageVelocity < 0.2) distortionTarget *= isDecelerating ? 0.95 : 0.855;
+        distortionAmount += (distortionTarget - distortionAmount) * config.distortionSmoothing;
+
+        const signedDistortion = distortionAmount * scrollDirection;
+        let closestDistance = Infinity;
+        let closestIndex = 0;
+
+        meshes.forEach((mesh) => {
+          const { offset } = mesh.userData;
+          let positionY = -(offset - wrap(scrollPosition, loopLength));
+          positionY = wrap(positionY + halfLoop, loopLength) - halfLoop;
+          mesh.position.y = positionY;
+
+          if (Math.abs(positionY) < closestDistance) {
+            closestDistance = Math.abs(positionY);
+            closestIndex = mesh.userData.index;
+          }
+
+          if (Math.abs(positionY) < halfLoop + config.maxHeight) {
+            applyDistortion(mesh, positionY, config.distortionStrength * signedDistortion);
+          }
+        });
+
+        if (closestIndex !== activeSlideIndex) {
+          activeSlideIndex = closestIndex;
+          titleElement.textContent = slides[activeSlideIndex].name;
+          counterElement.textContent = String(activeSlideIndex + 1).padStart(2, "0");
+        }
+
+        renderer.render(scene, camera);
+      }
+
+      animate();
+    </script>
+    <script type="module" src="./nav.js"></script>
+  </body>
+</html>
