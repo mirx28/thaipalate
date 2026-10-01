@@ -1,0 +1,766 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="robots" content="noindex, nofollow" />
+<title>Thai Palate &mdash; Menu Editor</title>
+<style>
+  :root{
+    --bg:#141210; --card:#1f1c19; --card2:#292522; --line:#3b3531;
+    --ink:#f6f1e7; --dim:#b3a89b; --red:#c0392b; --red2:#e0553f;
+    --ok:#4aa96c; --gold:#d9a441; --radius:12px;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    background:var(--bg); color:var(--ink);
+    font-family:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    font-size:17px; line-height:1.55; -webkit-text-size-adjust:100%;
+  }
+  a{color:var(--gold)}
+  .wrap{max-width:900px;margin:0 auto;padding:20px 16px 130px}
+
+  /* ---------- login ---------- */
+  .login-wrap{max-width:460px;margin:6vh auto;padding:0 16px}
+  .brand{text-align:center;margin-bottom:26px}
+  .brand h1{margin:0 0 6px;font-size:1.5rem;letter-spacing:.02em}
+  .brand p{margin:0;color:var(--dim);font-size:.92rem}
+  .card{
+    background:var(--card);border:1px solid var(--line);
+    border-radius:var(--radius);padding:22px
+  }
+  label.f{display:block;margin-bottom:16px}
+  label.f span{display:block;font-size:.86rem;color:var(--dim);margin-bottom:6px}
+  input[type=text],input[type=password],input[type=email],textarea,select{
+    width:100%;background:var(--card2);border:1px solid var(--line);
+    color:var(--ink);border-radius:9px;padding:13px 14px;font-size:1rem;
+    font-family:inherit;line-height:1.4
+  }
+  input:focus,textarea:focus,select:focus{outline:2px solid var(--gold);outline-offset:-1px}
+  textarea{resize:vertical;min-height:64px}
+  button{
+    font-family:inherit;font-size:1rem;border-radius:9px;border:1px solid var(--line);
+    background:var(--card2);color:var(--ink);padding:12px 18px;cursor:pointer
+  }
+  button:hover{border-color:var(--gold)}
+  .btn-primary{background:var(--red);border-color:var(--red);font-weight:600}
+  .btn-primary:hover{background:var(--red2);border-color:var(--red2)}
+  .btn-block{width:100%;padding:15px;font-size:1.05rem}
+  .btn-sm{padding:8px 12px;font-size:.86rem}
+  .btn-ghost{background:transparent}
+  .btn-danger{background:transparent;border-color:#5a3733;color:#e0857a}
+  .btn-danger:hover{border-color:var(--red2);color:#fff}
+
+  .msg{border-radius:9px;padding:12px 14px;margin:14px 0;font-size:.92rem;display:none}
+  .msg.show{display:block}
+  .msg.err{background:#3a1f1c;border:1px solid #6b2f28;color:#f0b8ae}
+  .msg.ok{background:#1c3527;border:1px solid #2f6b45;color:#a9e0bd}
+  .msg.info{background:#2a2620;border:1px solid var(--line);color:var(--dim)}
+
+  /* ---------- app ---------- */
+  .topbar{
+    position:sticky;top:0;z-index:20;background:var(--bg);
+    border-bottom:1px solid var(--line);padding:12px 16px
+  }
+  .topbar-in{max-width:900px;margin:0 auto;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+  .topbar h1{margin:0;font-size:1.05rem;font-weight:600;flex:1;min-width:180px}
+  .topbar h1 small{display:block;font-weight:400;color:var(--dim);font-size:.78rem}
+
+  .tabs{display:flex;gap:8px;margin:20px 0 22px}
+  .tab{
+    flex:1;padding:14px;text-align:center;border-radius:var(--radius);
+    border:1px solid var(--line);background:var(--card);cursor:pointer;
+    font-size:1.02rem;font-weight:600;color:var(--dim)
+  }
+  .tab.on{background:var(--red);border-color:var(--red);color:#fff}
+
+  .sec{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    padding:16px;margin-bottom:18px}
+  .sec h2{
+    margin:0 0 14px;font-size:1.12rem;letter-spacing:.01em;
+    padding-bottom:10px;border-bottom:1px dashed var(--line)
+  }
+  .sec h2 em{font-style:normal;color:var(--dim);font-weight:400;font-size:.8rem;float:right}
+
+  .tierbox{background:#241f1a;border:1px solid var(--line);border-radius:9px;
+    padding:12px;margin-bottom:16px}
+  .tierbox > span{display:block;font-size:.78rem;color:var(--gold);
+    text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px}
+  .tierrow{display:grid;grid-template-columns:1fr 110px;gap:8px;margin-bottom:8px}
+  .tierrow input{padding:9px 11px;font-size:.92rem}
+
+  .dish{border-top:1px solid var(--line);padding:14px 0}
+  .dish:first-of-type{border-top:0}
+  .dish .row1{display:grid;grid-template-columns:1fr 120px;gap:10px;margin-bottom:10px}
+  .dish .row2{display:grid;grid-template-columns:1fr 150px 44px;gap:10px;align-items:start}
+  .dish input,.dish select,.dish textarea{padding:11px 12px;font-size:.97rem}
+  .dish .del{
+    width:44px;height:44px;padding:0;display:flex;align-items:center;justify-content:center;
+    font-size:1.2rem;line-height:1
+  }
+  .flabel{font-size:.72rem;color:var(--dim);text-transform:uppercase;
+    letter-spacing:.06em;margin-bottom:4px;display:block}
+
+  .addrow{margin-top:14px}
+  .savenote{font-size:.85rem;color:var(--dim);margin-top:10px}
+
+  .savebar{
+    position:fixed;left:0;right:0;bottom:0;z-index:30;
+    background:#100e0c;border-top:1px solid var(--line);padding:12px 16px
+  }
+  .savebar-in{max-width:900px;margin:0 auto;display:flex;gap:12px;align-items:center}
+  .savebar .status{flex:1;font-size:.88rem;color:var(--dim)}
+  .savebar .status.changed{color:var(--gold);font-weight:600}
+  .savebar button{padding:14px 22px;font-size:1rem}
+
+  .spin{display:inline-block;width:15px;height:15px;border:2px solid rgba(255,255,255,.3);
+    border-top-color:#fff;border-radius:50%;animation:sp .7s linear infinite;
+    vertical-align:-2px;margin-right:8px}
+  @keyframes sp{to{transform:rotate(360deg)}}
+
+  .hidden{display:none !important}
+  @media (max-width:560px){
+    .dish .row1{grid-template-columns:1fr}
+    .dish .row2{grid-template-columns:1fr}
+    .dish .del{width:100%;height:auto;padding:10px}
+    .tierrow{grid-template-columns:1fr}
+  }
+</style>
+</head>
+<body>
+
+<!-- ============================ LOGIN ============================ -->
+<div id="login" class="login-wrap">
+  <div class="brand">
+    <h1>Thai Palate</h1>
+    <p>Menu editor</p>
+  </div>
+
+  <div class="card">
+    <div id="loginMsg" class="msg err"></div>
+
+    <label class="f"><span>Username</span>
+      <input id="inUser" type="text" autocomplete="username" placeholder="your GitHub username" />
+    </label>
+
+    <label class="f"><span>Admin key</span>
+      <input id="inKey" type="password" autocomplete="current-password" placeholder="paste your admin key" />
+    </label>
+
+    <label style="display:flex;gap:10px;align-items:flex-start;margin:0 0 18px;font-size:.9rem;color:var(--dim)">
+      <input id="inRemember" type="checkbox" checked style="width:20px;height:20px;margin-top:2px;flex:0 0 auto" />
+      <span>Remember me on this device &mdash; you will only need to type this once.</span>
+    </label>
+
+    <button id="btnLogin" class="btn-primary btn-block">Sign in</button>
+
+    <p style="margin:18px 0 0;font-size:.82rem;color:var(--dim);text-align:center">
+      <a href="#" id="toggleAdv">Connection settings</a>
+    </p>
+    <div id="advBox" class="hidden" style="margin-top:16px;border-top:1px solid var(--line);padding-top:16px">
+      <label class="f"><span>GitHub account / organisation</span><input id="inOwner" type="text" /></label>
+      <label class="f"><span>Repository</span><input id="inRepo" type="text" /></label>
+      <label class="f"><span>Branch</span><input id="inBranch" type="text" /></label>
+      <label class="f"><span>Lunch menu file</span><input id="inLunch" type="text" /></label>
+      <label class="f"><span>Dinner menu file</span><input id="inDinner" type="text" /></label>
+    </div>
+  </div>
+
+  <p style="text-align:center;color:var(--dim);font-size:.8rem;margin-top:22px">
+    <a href="index.html">&larr; Back to the website</a>
+  </p>
+</div>
+
+<!-- ============================= APP ============================= -->
+<div id="app" class="hidden">
+  <div class="topbar">
+    <div class="topbar-in">
+      <h1>Menu editor<small id="whoami"></small></h1>
+      <button id="btnReload" class="btn-sm btn-ghost">Reload</button>
+      <button id="btnLogout" class="btn-sm btn-ghost">Sign out</button>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <div id="appMsg" class="msg"></div>
+
+    <div class="tabs">
+      <div class="tab on" data-tab="lunch">Lunch menu</div>
+      <div class="tab" data-tab="dinner">Dinner menu</div>
+    </div>
+
+    <div id="sections"></div>
+  </div>
+
+  <div class="savebar">
+    <div class="savebar-in">
+      <div id="status" class="status">Loading&hellip;</div>
+      <button id="btnSave" class="btn-primary" disabled>Save changes</button>
+    </div>
+  </div>
+</div>
+
+<script>
+"use strict";
+
+/* =====================================================================
+   Thai Palate menu editor
+   ---------------------------------------------------------------------
+   This page edits the lunch and dinner menu HTML files directly and
+   commits them back to GitHub. GitHub Pages then rebuilds the site.
+   The "admin key" is a GitHub fine-grained personal access token with
+   Contents: Read and write on this one repository. It is never stored
+   in the website's source code - only in this browser.
+   ===================================================================== */
+
+var DEFAULTS = {
+  owner:  "mirx28",
+  repo:   "thaipalate",
+  branch: "main",
+  lunch:  "lunch-menu.html",
+  dinner: "dinner-menu.html"
+};
+
+var LS_CFG = "tp_admin_cfg";
+var LS_KEY = "tp_admin_key";
+
+var state = {
+  cfg: null,
+  token: null,
+  login: "",
+  tab: "lunch",
+  files: {},          /* key -> {path, sha, html, sections, original} */
+  busy: false
+};
+
+/* ---------------------------------------------------------------- utils */
+function $(id){ return document.getElementById(id); }
+
+function esc(s){
+  return String(s == null ? "" : s)
+    .replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;");
+}
+
+function b64encode(str){
+  var bytes = new TextEncoder().encode(str);
+  var bin = "";
+  for (var i = 0; i < bytes.length; i++) bin += String.fromCharCode(bytes[i]);
+  return btoa(bin);
+}
+
+function b64decode(b64){
+  var bin = atob(String(b64).replace(/\s/g,""));
+  var bytes = new Uint8Array(bin.length);
+  for (var i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+  return new TextDecoder().decode(bytes);
+}
+
+function clone(o){ return JSON.parse(JSON.stringify(o)); }
+
+function showMsg(el, kind, text){
+  el.className = "msg " + kind + " show";
+  el.innerHTML = text;
+}
+function hideMsg(el){ el.className = "msg"; el.innerHTML = ""; }
+
+/* ------------------------------------------------------------- github api */
+function apiUrl(path){
+  var c = state.cfg;
+  return "https://api.github.com/repos/" + c.owner + "/" + c.repo +
+         "/contents/" + path;
+}
+
+function headers(){
+  return {
+    "Authorization": "Bearer " + state.token,
+    "Accept": "application/vnd.github+json",
+    "X-GitHub-Api-Version": "2022-11-28"
+  };
+}
+
+async function ghGetFile(path){
+  var r = await fetch(apiUrl(path) + "?ref=" + encodeURIComponent(state.cfg.branch),
+                      { headers: headers() });
+  if (r.status === 404) throw new Error("Cannot find " + path + " in " + state.cfg.owner + "/" + state.cfg.repo + " on branch " + state.cfg.branch + ".");
+  if (r.status === 401) throw new Error("Your admin key was rejected. It may have expired.");
+  if (r.status === 403) throw new Error("Access denied. The admin key needs Contents: Read and write permission on this repository.");
+  if (!r.ok) throw new Error("GitHub said: " + r.status + " " + r.statusText);
+  var j = await r.json();
+  return { sha: j.sha, html: b64decode(j.content) };
+}
+
+async function ghPutFile(path, html, sha, message){
+  var r = await fetch(apiUrl(path), {
+    method: "PUT",
+    headers: Object.assign({ "Content-Type": "application/json" }, headers()),
+    body: JSON.stringify({
+      message: message,
+      content: b64encode(html),
+      sha: sha,
+      branch: state.cfg.branch
+    })
+  });
+  if (r.status === 409) throw new Error("Someone else changed this file while you were editing. Press Reload and try again.");
+  if (r.status === 401 || r.status === 403) throw new Error("Your admin key does not have permission to save. It needs Contents: Read and write.");
+  if (!r.ok){
+    var t = "";
+    try { t = (await r.json()).message || ""; } catch(e){}
+    throw new Error("Could not save: " + r.status + (t ? " - " + t : ""));
+  }
+  return r.json();
+}
+
+/* ------------------------------------------------------------ menu parsing */
+
+var HEAT_MILD  = '<span class="heat">mild</span>';
+var HEAT_SPICY = '<span class="heat heat--hot">spicy</span>';
+
+function parseMenu(html){
+  var sections = [];
+  var secRe = /<section class="course[^"]*">[\s\S]*?<\/section>/g;
+  var m;
+  while ((m = secRe.exec(html)) !== null){
+    var block = m[0];
+    var sec = {
+      title: "Section",
+      tier: null,
+      dishes: [],
+      start: m.index,
+      end: m.index + block.length,
+      raw: block
+    };
+
+    var tm = block.match(/<span class="label pencil-edge">([\s\S]*?)<\/span>/);
+    if (tm) sec.title = tm[1].trim();
+
+    /* protein tier line */
+    var pm = block.match(/<p class="tier">([\s\S]*?)<\/p>/);
+    if (pm){
+      var inner = pm[1];
+      var pairs = [];
+      var pr = /<b>([\s\S]*?)<\/b>\s*<em>([\s\S]*?)<\/em>/g, p;
+      while ((p = pr.exec(inner)) !== null){
+        pairs.push({ label: p[1].trim(), price: p[2].trim() });
+      }
+      var lead = inner.split("<b>")[0].replace(/\s+/g," ").trim();
+      sec.tier = { lead: lead, pairs: pairs };
+    }
+
+    /* dishes */
+    var dm = block.match(/<div class="dishes">([\s\S]*?)<\/div>/);
+    if (dm){
+      var ar = /<article class="dish">([\s\S]*?)<\/article>/g, a;
+      while ((a = ar.exec(dm[1])) !== null){
+        var inner2 = a[1];
+        var d = { name:"", price:"", desc:"", heat:"" };
+
+        var nm = inner2.match(/<span class="dname">([\s\S]*?)<\/span>/);
+        if (nm) d.name = nm[1].trim();
+        var pm2 = inner2.match(/<span class="dprice">([\s\S]*?)<\/span>/);
+        if (pm2) d.price = pm2[1].trim();
+
+        var dsm = inner2.match(/<span class="ddesc">([\s\S]*?)<\/span>/);
+        if (dsm){
+          var body = dsm[1];
+          if (/class="heat[^"]*"/.test(body)){
+            d.heat = /heat--hot/.test(body) ? "spicy" : "mild";
+            body = body.replace(/<span class="heat[^"]*">[\s\S]*?<\/span>/g, "").trim();
+          }
+          d.desc = body.trim();
+        }
+        sec.dishes.push(d);
+      }
+    }
+    sections.push(sec);
+  }
+  return sections;
+}
+
+function buildSection(sec){
+  var block = sec.raw;
+
+  /* tier line */
+  if (sec.tier){
+    block = block.replace(/<p class="tier">[\s\S]*?<\/p>/, function(){
+      var parts = sec.tier.pairs.map(function(p){
+        return "<b>" + p.label + "</b> <em>" + p.price + "</em>";
+      });
+      return '<p class="tier">\n          ' + esc(sec.tier.lead) + "\n          " +
+             parts.join(" &middot;\n          ") + "\n        </p>";
+    });
+  }
+
+  /* dish rows */
+  block = block.replace(/(<div class="dishes">)[\s\S]*?(<\/div>)/, function(_, open, close){
+    var rows = sec.dishes.map(function(d){
+      var heat = d.heat === "spicy" ? HEAT_SPICY : (d.heat === "mild" ? HEAT_MILD : "");
+      var inner = [d.desc, heat].filter(Boolean).join(" ");
+      var descLine = inner ? '\n          <span class="ddesc">' + inner + "</span>" : "";
+      return '        <article class="dish">\n' +
+             '          <span class="dname">' + d.name + "</span>\n" +
+             '          <span class="leader" aria-hidden="true"></span>\n' +
+             '          <span class="dprice">' + d.price + "</span>" + descLine + "\n" +
+             "        </article>";
+    }).join("\n");
+    return open + "\n" + rows + "\n        " + close;
+  });
+
+  return block;
+}
+
+function rebuildHtml(entry){
+  var html = entry.html;
+  var changed = [];
+  for (var i = 0; i < entry.sections.length; i++){
+    var sec = entry.sections[i];
+    var orig = entry.original[i];
+    if (JSON.stringify(sec) !== JSON.stringify(orig)) changed.push(sec);
+  }
+  /* apply back-to-front so offsets stay valid */
+  changed.sort(function(a,b){ return b.start - a.start; });
+  for (var j = 0; j < changed.length; j++){
+    var s = changed[j];
+    html = html.slice(0, s.start) + buildSection(s) + html.slice(s.end);
+  }
+  return { html: html, changed: changed.length };
+}
+
+/* ------------------------------------------------------------------ loading */
+
+async function loadAll(){
+  var status = $("status");
+  status.textContent = "Loading menus\u2026";
+  var keys = ["lunch","dinner"];
+  for (var i = 0; i < keys.length; i++){
+    var k = keys[i];
+    var path = state.cfg[k];
+    var got = await ghGetFile(path);
+    var sections = parseMenu(got.html);
+    state.files[k] = {
+      path: path,
+      sha: got.sha,
+      html: got.html,
+      sections: sections,
+      original: clone(sections)
+    };
+  }
+  status.textContent = "Loaded. No changes yet.";
+}
+
+/* ------------------------------------------------------------------ render */
+
+function render(){
+  var host = $("sections");
+  var entry = state.files[state.tab];
+  if (!entry){ host.innerHTML = "<p>Nothing loaded.</p>"; return; }
+
+  var out = [];
+  entry.sections.forEach(function(sec, si){
+    out.push('<div class="sec">');
+    out.push('<h2>' + esc(sec.title) + '<em>' + sec.dishes.length + ' item' +
+             (sec.dishes.length === 1 ? "" : "s") + '</em></h2>');
+
+    if (sec.tier){
+      out.push('<div class="tierbox"><span>Your choice of &mdash; price per protein</span>');
+      sec.tier.pairs.forEach(function(p, pi){
+        out.push('<div class="tierrow">' +
+          '<input type="text" value="' + esc(p.label) + '" data-si="' + si +
+            '" data-ti="' + pi + '" data-tf="label" aria-label="Protein name" />' +
+          '<input type="text" value="' + esc(p.price) + '" data-si="' + si +
+            '" data-ti="' + pi + '" data-tf="price" aria-label="Protein price" />' +
+          '</div>');
+      });
+      out.push('</div>');
+    }
+
+    sec.dishes.forEach(function(d, di){
+      out.push('<div class="dish">');
+      out.push('<div class="row1">' +
+        '<div><span class="flabel">Dish name</span>' +
+        '<input type="text" value="' + esc(d.name) + '" data-si="' + si +
+          '" data-di="' + di + '" data-df="name" /></div>' +
+        '<div><span class="flabel">Price</span>' +
+        '<input type="text" value="' + esc(d.price) + '" data-si="' + si +
+          '" data-di="' + di + '" data-df="price" placeholder="blank if tiered" /></div>' +
+        '</div>');
+      out.push('<div class="row2">' +
+        '<div><span class="flabel">Description</span>' +
+        '<textarea rows="2" data-si="' + si + '" data-di="' + di +
+          '" data-df="desc">' + esc(d.desc) + '</textarea></div>' +
+        '<div><span class="flabel">Spice</span>' +
+        '<select data-si="' + si + '" data-di="' + di + '" data-df="heat">' +
+          '<option value=""' + (d.heat === "" ? " selected" : "") + '>None</option>' +
+          '<option value="mild"' + (d.heat === "mild" ? " selected" : "") + '>Mild</option>' +
+          '<option value="spicy"' + (d.heat === "spicy" ? " selected" : "") + '>Spicy</option>' +
+        '</select></div>' +
+        '<button class="del btn-danger" data-del-si="' + si + '" data-del-di="' + di +
+          '" title="Remove this dish">&times;</button>' +
+        '</div>');
+      out.push('</div>');
+    });
+
+    out.push('<div class="addrow"><button class="btn-sm" data-add="' + si +
+             '">+ Add a dish</button></div>');
+    out.push('</div>');
+  });
+
+  host.innerHTML = out.join("");
+  updateStatus();
+}
+
+function updateStatus(){
+  var n = 0, files = 0;
+  ["lunch","dinner"].forEach(function(k){
+    var e = state.files[k];
+    if (!e) return;
+    var c = 0;
+    for (var i = 0; i < e.sections.length; i++){
+      if (JSON.stringify(e.sections[i]) !== JSON.stringify(e.original[i])) c++;
+    }
+    n += c;
+    if (c) files++;
+  });
+  var st = $("status"), btn = $("btnSave");
+  if (n === 0){
+    st.textContent = "No changes yet.";
+    st.className = "status";
+    btn.disabled = true;
+  } else {
+    st.textContent = n + " section" + (n === 1 ? "" : "s") + " changed in " +
+                     files + " menu" + (files === 1 ? "" : "s") + ".";
+    st.className = "status changed";
+    btn.disabled = false;
+  }
+}
+
+/* ------------------------------------------------------------------ events */
+
+function bindApp(){
+  document.querySelectorAll(".tab").forEach(function(t){
+    t.addEventListener("click", function(){
+      state.tab = t.getAttribute("data-tab");
+      document.querySelectorAll(".tab").forEach(function(x){ x.classList.remove("on"); });
+      t.classList.add("on");
+      render();
+    });
+  });
+
+  $("sections").addEventListener("input", function(ev){
+    var el = ev.target;
+    var si = el.getAttribute("data-si");
+    if (si === null) return;
+    var entry = state.files[state.tab];
+    var sec = entry.sections[+si];
+
+    var ti = el.getAttribute("data-ti");
+    if (ti !== null){
+      sec.tier.pairs[+ti][el.getAttribute("data-tf")] = el.value;
+      updateStatus();
+      return;
+    }
+    var di = el.getAttribute("data-di");
+    if (di !== null){
+      sec.dishes[+di][el.getAttribute("data-df")] = el.value;
+      updateStatus();
+    }
+  });
+
+  $("sections").addEventListener("change", function(ev){
+    var el = ev.target;
+    if (el.tagName === "SELECT" && el.getAttribute("data-di") !== null){
+      var sec = state.files[state.tab].sections[+el.getAttribute("data-si")];
+      sec.dishes[+el.getAttribute("data-di")].heat = el.value;
+      updateStatus();
+    }
+  });
+
+  $("sections").addEventListener("click", function(ev){
+    var add = ev.target.closest("[data-add]");
+    if (add){
+      var sec = state.files[state.tab].sections[+add.getAttribute("data-add")];
+      sec.dishes.push({ name:"", price:"", desc:"", heat:"" });
+      render();
+      var boxes = document.querySelectorAll(".sec");
+      var idx = +add.getAttribute("data-add");
+      if (boxes[idx]) boxes[idx].scrollIntoView({ behavior:"smooth", block:"center" });
+      return;
+    }
+    var del = ev.target.closest("[data-del-si]");
+    if (del){
+      var s = state.files[state.tab].sections[+del.getAttribute("data-del-si")];
+      var d = +del.getAttribute("data-del-di");
+      if (!confirm("Remove \u201C" + (s.dishes[d].name || "this dish") + "\u201D from the menu?")) return;
+      s.dishes.splice(d, 1);
+      render();
+    }
+  });
+
+  $("btnSave").addEventListener("click", save);
+  $("btnReload").addEventListener("click", function(){
+    if (!confirm("Reload from GitHub and discard any unsaved changes?")) return;
+    loadAll().then(render).catch(function(e){ showMsg($("appMsg"), "err", esc(e.message)); });
+  });
+  $("btnLogout").addEventListener("click", function(){
+    localStorage.removeItem(LS_KEY);
+    location.reload();
+  });
+}
+
+async function save(){
+  if (state.busy) return;
+  state.busy = true;
+  var btn = $("btnSave");
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spin"></span>Saving\u2026';
+  hideMsg($("appMsg"));
+
+  try {
+    var saved = 0;
+    var keys = ["lunch","dinner"];
+    for (var i = 0; i < keys.length; i++){
+      var k = keys[i];
+      var entry = state.files[k];
+      var res = rebuildHtml(entry);
+      if (!res.changed) continue;
+
+      var label = k === "lunch" ? "Lunch" : "Dinner";
+      await ghPutFile(entry.path, res.html, entry.sha,
+        "Update " + label.toLowerCase() + " menu (" + res.changed +
+        " section" + (res.changed === 1 ? "" : "s") + ") \u2014 via menu editor");
+
+      var fresh = await ghGetFile(entry.path);
+      var sections = parseMenu(fresh.html);
+      state.files[k] = {
+        path: entry.path, sha: fresh.sha, html: fresh.html,
+        sections: sections, original: clone(sections)
+      };
+      saved++;
+    }
+
+    showMsg($("appMsg"), "ok",
+      "<b>Saved.</b> Your changes are in GitHub now. The live site usually " +
+      "updates within about a minute &mdash; refresh the menu page after that.");
+    render();
+  } catch (err){
+    showMsg($("appMsg"), "err", "<b>Not saved.</b> " + esc(err.message));
+  } finally {
+    state.busy = false;
+    btn.innerHTML = "Save changes";
+    updateStatus();
+  }
+}
+
+/* ------------------------------------------------------------------- login */
+
+function loadCfg(){
+  var cfg = clone(DEFAULTS);
+  try {
+    var saved = JSON.parse(localStorage.getItem(LS_CFG) || "null");
+    if (saved) cfg = Object.assign(cfg, saved);
+  } catch(e){}
+  return cfg;
+}
+
+function fillCfgForm(cfg){
+  $("inOwner").value  = cfg.owner;
+  $("inRepo").value   = cfg.repo;
+  $("inBranch").value = cfg.branch;
+  $("inLunch").value  = cfg.lunch;
+  $("inDinner").value = cfg.dinner;
+}
+
+function readCfgForm(){
+  return {
+    owner:  $("inOwner").value.trim()  || DEFAULTS.owner,
+    repo:   $("inRepo").value.trim()   || DEFAULTS.repo,
+    branch: $("inBranch").value.trim() || DEFAULTS.branch,
+    lunch:  $("inLunch").value.trim()  || DEFAULTS.lunch,
+    dinner: $("inDinner").value.trim() || DEFAULTS.dinner
+  };
+}
+
+function showApp(){
+  $("login").classList.add("hidden");
+  $("app").classList.remove("hidden");
+  $("whoami").textContent = "signed in as " + state.login + " \u00B7 " +
+                            state.cfg.owner + "/" + state.cfg.repo;
+  bindApp();
+  render();
+}
+
+async function doLogin(){
+  var user = $("inUser").value.trim();
+  var key  = $("inKey").value.trim();
+  var msg  = $("loginMsg");
+  hideMsg(msg);
+
+  if (!key){ showMsg(msg, "err", "Please paste your admin key."); return; }
+
+  state.cfg = readCfgForm();
+  state.token = key;
+
+  var btn = $("btnLogin");
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spin"></span>Checking\u2026';
+
+  try {
+    var r = await fetch("https://api.github.com/user", { headers: headers() });
+    if (r.status === 401){
+      throw new Error("That admin key was not accepted. Check it was copied in full and has not expired.");
+    }
+    if (!r.ok) throw new Error("Could not reach GitHub (" + r.status + ").");
+
+    var me = await r.json();
+    if (user && me.login && user.toLowerCase() !== me.login.toLowerCase()){
+      throw new Error("The username does not match that key. The key belongs to \u201C" + me.login + "\u201D.");
+    }
+    state.login = me.login || user || "admin";
+
+    if ($("inRemember").checked){
+      localStorage.setItem(LS_KEY, key);
+      localStorage.setItem(LS_CFG, JSON.stringify(state.cfg));
+    } else {
+      localStorage.removeItem(LS_KEY);
+    }
+
+    await loadAll();
+    showApp();
+  } catch (err){
+    showMsg(msg, "err", esc(err.message));
+    btn.disabled = false;
+    btn.innerHTML = "Sign in";
+  }
+}
+
+/* -------------------------------------------------------------------- boot */
+
+function boot(){
+  state.cfg = loadCfg();
+  fillCfgForm(state.cfg);
+
+  $("toggleAdv").addEventListener("click", function(ev){
+    ev.preventDefault();
+    $("advBox").classList.toggle("hidden");
+  });
+  $("btnLogin").addEventListener("click", doLogin);
+  $("inKey").addEventListener("keydown", function(ev){
+    if (ev.key === "Enter") doLogin();
+  });
+  $("inUser").addEventListener("keydown", function(ev){
+    if (ev.key === "Enter") doLogin();
+  });
+
+  var saved = localStorage.getItem(LS_KEY);
+  if (saved){
+    $("inKey").value = saved;
+    $("inUser").value = "";
+    doLogin();
+  }
+}
+
+boot();
+</script>
+</body>
+</html>
